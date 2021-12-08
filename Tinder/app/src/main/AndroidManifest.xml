@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Tinder"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Chat.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".Matches.MatchesActivity"
             android:exported="false" />
         <activity

@@ -1,4 +1,4 @@
-package com.example.tinder.setup;
+package com.example.tinder.Setup;
 
 import android.content.Context;
 import android.view.LayoutInflater;

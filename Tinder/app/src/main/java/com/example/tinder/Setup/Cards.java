@@ -1,4 +1,4 @@
-package com.example.tinder.setup;
+package com.example.tinder.Setup;
 
 public class Cards {
     private String name, userId, profileImageUrl;
