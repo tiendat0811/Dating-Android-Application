@@ -171,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                     Cards item = new Cards(snapshot.getKey(), snapshot.child("name").getValue().toString(), userImageUrl);
                     rowItems.add(item);
                     arrayAdapter.notifyDataSetChanged();
-                    Log.i("Test",rowItems.toString());
                 }
             }
             @Override
