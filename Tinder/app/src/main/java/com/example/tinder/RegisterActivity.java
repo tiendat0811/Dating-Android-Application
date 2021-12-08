@@ -21,6 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister;
     private EditText edtEmail, edtPassword, edtName;
@@ -76,9 +79,12 @@ public class RegisterActivity extends AppCompatActivity {
                         else{
 
                             String userId = mAuth.getCurrentUser().getUid();
-                            DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("name");
-                            currentUser.setValue(name);
-                            Log.i("test", "register succesc");
+                            DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+                            Map userInfo = new HashMap<>();
+                            userInfo.put("name", name);
+                            userInfo.put("gender", radioButton.getText().toString());
+                            userInfo.put("profileImageUrl", "default");
+                            currentUser.updateChildren(userInfo);
                         }
                     }
                 });

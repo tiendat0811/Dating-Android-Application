@@ -1,4 +1,4 @@
-package com.example.tinder;
+package com.example.tinder.setup;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.example.tinder.R;
 
 import java.util.List;
 
@@ -28,9 +31,8 @@ public class arrayAdapter extends ArrayAdapter<Cards> {
         ImageView userImage = (ImageView) convertView.findViewById(R.id.userImage);
 
         userName.setText(card_item.getName());
-        userImage.setImageResource(R.mipmap.ic_launcher);
+        Glide.with(getContext()).load(card_item.getProfileImageUrl()).into(userImage);
 
         return convertView;
-
     }
 }
