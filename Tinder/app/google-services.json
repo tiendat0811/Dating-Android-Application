@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "423406442792",
+    "firebase_url": "https://tinder-51cdc-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "tinder-51cdc",
+    "storage_bucket": "tinder-51cdc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423406442792:android:dc2f09833554cb492b981d",
+        "android_client_info": {
+          "package_name": "com.example.tinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423406442792-l5c88b89htrc6mqj4go7p4haisuoob0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tinder",
+            "certificate_hash": "bb5079d81708bcf8f0d2f60310a881c8b8ef9184"
+          }
+        },
+        {
+          "client_id": "423406442792-ge225dti9kqd240h69e86q17umhiu3a6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRsq5dm4QXu-WYa7dP7yRuC_ipdsflT_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423406442792-ge225dti9kqd240h69e86q17umhiu3a6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
