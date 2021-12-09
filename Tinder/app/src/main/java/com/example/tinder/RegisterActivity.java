@@ -83,7 +83,8 @@ public class RegisterActivity extends AppCompatActivity {
                             Map userInfo = new HashMap<>();
                             userInfo.put("name", name);
                             userInfo.put("gender", radioButton.getText().toString());
-                            userInfo.put("profileImageUrl", "default");
+                            String defaultUrl = "https://firebasestorage.googleapis.com/v0/b/tinder-51cdc.appspot.com/o/profileImages%2Fdefault.png?alt=media&token=d3e0e17a-2ed0-42a4-a317-4db725b06394";
+                            userInfo.put("profileImageUrl", defaultUrl);
                             currentUser.updateChildren(userInfo);
                         }
                     }

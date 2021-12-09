@@ -166,12 +166,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(snapshot.exists() && !snapshot.child("connections").child("dislike").hasChild(currentUid) && !snapshot.child("connections").child("like").hasChild(currentUid) && snapshot.child("gender").getValue().toString().equals(findUserGender)){
-                    String userImageUrl = "https://firebasestorage.googleapis.com/v0/b/tinder-51cdc.appspot.com/o/profileImages%2Fdefault.jpg?alt=media&token=6543f424-a27e-426f-8091-07681e97648c";
-                    if(!snapshot.child("profileImageUrl").getValue().toString().equals("default")){
-                        userImageUrl = snapshot.child("profileImageUrl").getValue().toString();
-                    }
-
-                    Cards item = new Cards(snapshot.getKey(), snapshot.child("name").getValue().toString(), userImageUrl);
+                    Cards item = new Cards(snapshot.getKey(), snapshot.child("name").getValue().toString(), snapshot.child("profileImageUrl").getValue().toString());
                     rowItems.add(item);
                     arrayAdapter.notifyDataSetChanged();
                 }
@@ -193,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void logoutUser(View view) {
         mAuth.signOut();
+        Log.i("test", mAuth.toString());
         Intent intent = new Intent(MainActivity.this, StartActivity.class);
         startActivity(intent);
         finish();
