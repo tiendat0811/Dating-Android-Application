@@ -4,21 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/custom_background"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".SettingsActivity">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:padding="5dp"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/ic_launcher_background"
+        app:shapeAppearanceOverlay="@style/Circle"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/black"/>
 
     <EditText
         android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingLeft="5dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Name"
         android:minHeight="48dp" />
@@ -27,6 +36,9 @@
         android:id="@+id/edtPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_edittext"
+        android:layout_margin="8dp"
+        android:paddingLeft="5dp"
         android:ems="10"
         android:hint="Phone Number"
         android:minHeight="48dp" />
@@ -35,11 +47,17 @@
         android:id="@+id/btnConfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm" />
+        android:background="@drawable/custom_button"
+        android:layout_margin="8dp"
+        android:text="Confirm"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/btnBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Back" />
+        android:background="@drawable/custom_button"
+        android:layout_margin="8dp"
+        android:text="Back"
+        android:textColor="@color/white"/>
 </LinearLayout>

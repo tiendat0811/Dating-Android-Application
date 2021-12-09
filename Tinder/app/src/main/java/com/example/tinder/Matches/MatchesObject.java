@@ -1,12 +1,13 @@
 package com.example.tinder.Matches;
 
 public class MatchesObject {
-    private String userId, name, profileImageUrl;
+    private String userId, name, profileImageUrl, lastestChat;
 
-    public MatchesObject(String userId, String name, String profileImageUrl) {
+    public MatchesObject(String userId, String name, String profileImageUrl, String lastestChat) {
         this.userId = userId;
         this.name = name;
         this.profileImageUrl = profileImageUrl;
+        this.lastestChat = lastestChat;
     }
 
     public String getUserId() {
@@ -31,5 +32,13 @@ public class MatchesObject {
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getLastestChat() {
+        return lastestChat;
+    }
+
+    public void setLastestChat(String lastestChat) {
+        this.lastestChat = lastestChat;
     }
 }

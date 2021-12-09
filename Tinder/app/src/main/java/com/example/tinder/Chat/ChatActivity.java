@@ -58,26 +58,41 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setAdapter(chatAdapter);
 
         edtMessage = findViewById(R.id.edtMessage);
-        btnSend = findViewById(R.id.btnSend);
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = edtMessage.getText().toString();
-
-                if(!message.isEmpty()){
-                    DatabaseReference newMessDb = chatDb.push();
-
-                    Map newMesssage = new HashMap();
-                    newMesssage.put("sender", currentUserId);
-                    newMesssage.put("message", message);
-
-                    newMessDb.setValue(newMesssage);
-                }
-                edtMessage.setText("");
-            }
-        });
+//        btnSend = findViewById(R.id.btnSend);
+//
+//        btnSend.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String message = edtMessage.getText().toString();
+//
+//                if(!message.isEmpty()){
+//                    DatabaseReference newMessDb = chatDb.push();
+//
+//                    Map newMesssage = new HashMap();
+//                    newMesssage.put("sender", currentUserId);
+//                    newMesssage.put("message", message);
+//
+//                    newMessDb.setValue(newMesssage);
+//                }
+//                edtMessage.setText("");
+//            }
+//        });
     }
+    public void sendMessage(View view) {
+        String message = edtMessage.getText().toString();
+
+        if(!message.isEmpty()){
+            DatabaseReference newMessDb = chatDb.push();
+
+            Map newMesssage = new HashMap();
+            newMesssage.put("sender", currentUserId);
+            newMesssage.put("message", message);
+
+            newMessDb.setValue(newMesssage);
+        }
+        edtMessage.setText("");
+    }
+
     private void getChatId(){
         userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

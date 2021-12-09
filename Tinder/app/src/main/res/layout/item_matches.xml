@@ -2,15 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:gravity="center">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/machesImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/ic_launcher_background"
+        app:shapeAppearanceOverlay="@style/Circle"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/black"
+        android:padding="2dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,13 +27,21 @@
             android:id="@+id/matchesName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Matches's Name" />
+            android:text="Matches's Name"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/lastestChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lastest Chat"
+            android:layout_margin="5dp"/>
 
         <TextView
             android:id="@+id/matchesId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Matches's ID" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            />
     </LinearLayout>
 
 </LinearLayout>
