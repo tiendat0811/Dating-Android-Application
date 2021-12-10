@@ -27,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -35,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(user != null){
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
-                    finish();
                     return;
                 }
             }

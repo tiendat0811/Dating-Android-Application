@@ -41,11 +41,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder> {
         holder.tvMessage.setText(chatList.get(position).getMessage());
         if(chatList.get(position).getMyChat()){
             holder.container.setGravity(Gravity.RIGHT);
-            holder.tvMessage.setTextColor(Color.parseColor("#000000"));
+            holder.tvMessage.setTextColor(Color.parseColor("#ffffff"));
             holder.tvMessage.setBackgroundResource(R.drawable.custom_chat);
         }else {
             holder.container.setGravity(Gravity.LEFT);
-            holder.tvMessage.setTextColor(Color.parseColor("#FFFFFF"));
+            holder.tvMessage.setTextColor(Color.parseColor("#ffffff"));
             holder.tvMessage.setBackgroundResource(R.drawable.custom_pchat);
         }
     }

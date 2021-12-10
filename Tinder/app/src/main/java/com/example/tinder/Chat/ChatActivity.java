@@ -3,6 +3,7 @@ package com.example.tinder.Chat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,14 +34,14 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager chatLayoutManager;
 
     private EditText edtMessage;
-    private Button btnSend;
-    private String currentUserId, matchId, chatId;
-
+    private String currentUserId, matchId, chatId, matchName;
     DatabaseReference userDb, chatDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         matchId = getIntent().getExtras().getString("matchId");
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -49,9 +50,10 @@ public class ChatActivity extends AppCompatActivity {
         chatDb = FirebaseDatabase.getInstance().getReference().child("Chat");
         getChatId();
 
+//        toolbar = findViewById(R.id.toolbar);
+        getName();
+
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setHasFixedSize(false);
         chatLayoutManager = new LinearLayoutManager(ChatActivity.this);
         recyclerView.setLayoutManager(chatLayoutManager);
         chatAdapter = new ChatAdapter(getDataSetChat(), ChatActivity.this);
@@ -77,6 +79,24 @@ public class ChatActivity extends AppCompatActivity {
 //                edtMessage.setText("");
 //            }
 //        });
+
+
+    }
+    public void getName(){
+        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Users").child(matchId).child("name");
+        matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    matchName = snapshot.getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     public void sendMessage(View view) {
         String message = edtMessage.getText().toString();
@@ -100,7 +120,6 @@ public class ChatActivity extends AppCompatActivity {
                 if(snapshot.exists()){
                     chatId = snapshot.getValue().toString();
                     chatDb = chatDb.child(chatId);
-
                     getChatMessages();
                 }
             }
@@ -113,6 +132,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void getChatMessages() {
+
         chatDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -136,6 +156,8 @@ public class ChatActivity extends AppCompatActivity {
                         ChatObject newMessage = new ChatObject(message, myChat);
                         resultChat.add(newMessage);
                         chatAdapter.notifyDataSetChanged();
+
+                        recyclerView.scrollToPosition(resultChat.size()-1);
                     }
                 }
             }
@@ -153,6 +175,13 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        return;
     }
 
     private ArrayList<ChatObject> resultChat = new ArrayList<ChatObject>();

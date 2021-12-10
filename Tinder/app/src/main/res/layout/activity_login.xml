@@ -8,17 +8,31 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".RegisterActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:text="TDTU Dating"
+        android:textAllCaps="true"
+        android:textColor="#FE3C72"
+        android:textSize="34sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edtEmail"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_margin="8dp"
+        android:paddingHorizontal="5dp"
         android:background="@drawable/custom_edittext"
         android:ems="10"
         android:gravity="center"
-        android:hint="Email"
+        android:hint="Enter email"
         android:inputType="textEmailAddress"
+        android:drawableStart="@drawable/ic_baseline_email_24"
         android:minHeight="48dp" />
 
     <EditText
@@ -26,10 +40,12 @@
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_margin="8dp"
+        android:paddingHorizontal="5dp"
         android:background="@drawable/custom_edittext"
         android:ems="10"
         android:gravity="center"
-        android:hint="Password"
+        android:hint="Enter password"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
         android:inputType="textPassword"
         android:minHeight="48dp" />
 
@@ -41,7 +57,7 @@
         android:layout_margin="8dp"
         android:background="@drawable/custom_button"
         android:textColor="@color/white"
-        android:text="Login"
+        android:text="LOGIN"
         android:textSize="20dp"
         android:textAllCaps="false"/>
 </LinearLayout>

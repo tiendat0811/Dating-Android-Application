@@ -7,8 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tinder.Matches.MatchesActivity;
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentUid;
     private DatabaseReference usersDb;
-
+    private SwipeFlingAdapterView flingContainer;
     ListView listView;
     List<Cards> rowItems;
 
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems);
 
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+        flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -89,23 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
+                //Toast.makeText(MainActivity.this, "Oh no! There are no other users!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onScroll(float scrollProgressPercent) {
             }
         });
-
-
-        // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(MainActivity.this,"Clicked!",Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     //check match
@@ -115,7 +110,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    Toast.makeText(MainActivity.this, "MATCH!", Toast.LENGTH_SHORT).show();
+                    //Show Match Toast
+                    LayoutInflater inflater = getLayoutInflater();
+                    View layout = inflater.inflate(R.layout.toast_match, (ViewGroup) findViewById(R.id.toast_root));
+                    ImageView toastImage = layout.findViewById(R.id.toast_image);
+
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.setView(layout);
+
+                    toast.show();
 
                     //set ChatId
                     String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
@@ -205,5 +210,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, MatchesActivity.class);
         startActivity(intent);
         return;
+    }
+
+    public void dislike(View view) {
+        flingContainer.getTopCardListener().selectLeft();
+    }
+
+    public void like(View view) {
+        flingContainer.getTopCardListener().selectRight();
     }
 }

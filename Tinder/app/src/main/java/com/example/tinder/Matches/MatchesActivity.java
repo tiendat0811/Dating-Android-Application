@@ -28,11 +28,12 @@ public class MatchesActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager matchesLayoutManager;
 
     private String currentUserId;
-    private String lastestChat = "...";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -67,22 +68,33 @@ public class MatchesActivity extends AppCompatActivity {
     }
 
     private void FetchMatchesInfo(String key) {
-        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
-
-        userDb.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference myDb = FirebaseDatabase.getInstance().getReference();
+        myDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String userId = snapshot.getKey();
+                if(snapshot.child("Users").child(key).exists()){
+                    String userId = snapshot.child("Users").child(key).getKey();
                     String name = "";
                     String profileImageUrl = "";
-                    getChatId(userDb);
+                    String lastestChat = "...";
+                    String chatId = "";
 
-                    if(snapshot.child("name").getValue()!=null){
-                        name = snapshot.child("name").getValue().toString();
+                    if(snapshot.child("Users").child(key).child("connections").child("matches").child(currentUserId).child("chatId").exists()){
+                        chatId = snapshot.child("Users").child(key).child("connections").child("matches").child(currentUserId).child("chatId").getValue().toString();
                     }
-                    if(snapshot.child("profileImageUrl").getValue()!=null){
-                        profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
+                    if(snapshot.child("Chat").child(chatId).exists()){
+                        DataSnapshot temp = null;
+                        for (DataSnapshot userSnapshot: snapshot.child("Chat").child(chatId).getChildren()) {
+                            temp = userSnapshot;
+                        }
+                        lastestChat = temp.child("message").getValue().toString();
+                    }
+
+                    if(snapshot.child("Users").child(key).child("name").getValue()!=null){
+                        name = snapshot.child("Users").child(key).child("name").getValue().toString();
+                    }
+                    if(snapshot.child("Users").child(key).child("profileImageUrl").getValue()!=null){
+                        profileImageUrl = snapshot.child("Users").child(key).child("profileImageUrl").getValue().toString();
                     }
 
                     MatchesObject mo = new MatchesObject(userId, name, profileImageUrl, lastestChat);
@@ -93,47 +105,87 @@ public class MatchesActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+//        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
+//        DatabaseReference chatDb = FirebaseDatabase.getInstance().getReference().child("Chat");
+//        userDb.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(snapshot.exists()){
+//                    String userId = snapshot.getKey();
+//                    String name = "";
+//                    String profileImageUrl = "";
+//                    String lastestChats = "";
+//                    //get lastest chat
+//                    userDb.child("connections").child("matches").child(currentUserId).child("chatId").addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if(snapshot.exists()){
+//                                chatId = snapshot.getValue().toString();
+//                                Log.i("chat1", chatId);
+//                            }
+//                        }
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//                        }
+//                    });
+//
+//                    chatDb = chatDb.child(chatId);
+    //                    chatDb.orderByKey().limitToLast(1).addChildEventListener(new ChildEventListener() {
+//                        @Override
+//                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                            if(snapshot.child("message").getValue()!= null){
+//                                lastestChat = snapshot.child("message").getValue().toString();
+//                                Log.i("chat2", lastestChat);
+//                            }
+//                        }
+//                        @Override
+//                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                        }
+//                        @Override
+//                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//                        }
+//                        @Override
+//                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                        }
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//                    //end get lastest chat
+//
+//                    if(snapshot.child("name").getValue()!=null){
+//                        name = snapshot.child("name").getValue().toString();
+//                    }
+//                    if(snapshot.child("profileImageUrl").getValue()!=null){
+//                        profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
+//                    }
+//
+//                    MatchesObject mo = new MatchesObject(userId, name, profileImageUrl, lastestChat);
+//                    resultMatches.add(mo);
+//                    matchesAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
     }
 
-    //get lastest chat -
-    private void getChatId(DatabaseReference userDb){
-        userDb.child("connections").child("matches").child(currentUserId).child("chatId").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String chatId = snapshot.getValue().toString();
-                    Log.i("chat1", chatId);
-                    getLastestChat(chatId);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        startActivity(getIntent());
     }
-    private void getLastestChat(String chatId){
-        DatabaseReference chatDb = FirebaseDatabase.getInstance().getReference().child("Chat").child(chatId);
-        Query query = chatDb.orderByKey().limitToLast(1);
-        Log.i("chat2", query.getRef().toString());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child("message").getValue()!= null){
-                    lastestChat = snapshot.child("message").getValue().toString();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-    //end get lastest chat
+
     private ArrayList<MatchesObject> resultMatches = new ArrayList<MatchesObject>();
     private List<MatchesObject> getDataSetMatches() {
         return  resultMatches;
