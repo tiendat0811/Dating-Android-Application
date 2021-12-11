@@ -67,14 +67,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:checkedButton="@id/btnMale">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/btnMale"
             android:minHeight="48dp"
             android:layout_marginHorizontal="30dp"
-            android:checked="true"
             android:text="Male" />
 
         <RadioButton

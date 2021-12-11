@@ -63,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int gender = radioGroup.getCheckedRadioButtonId();
+
                 final RadioButton radioButton = findViewById(gender);
                 if(radioButton.getText() == null){
                     return;
